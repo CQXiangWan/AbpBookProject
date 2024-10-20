@@ -1,0 +1,39 @@
+﻿@page
+@using Acme.mianshiBookProject.Localization
+@using Acme.mianshiBookProject.Permissions
+@using Acme.mianshiBookProject.Web.Pages.Authors
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Packages.SignalR
+@inject IStringLocalizer<mianshiBookProjectResource> L
+@inject IAuthorizationService AuthorizationService
+@model IndexModel
+
+@section scripts
+{
+    <abp-script src="/Pages/Authors/Index.js" />
+    <abp-script type="typeof(SignalRBrowserScriptContributor)" />
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Authors"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-right">
+                @if (await AuthorizationService
+                .IsGrantedAsync(mianshiBookProjectPermissions.Authors.Create))
+                {
+                    <abp-button id="NewAuthorButton"
+                                text="@L["NewAuthor"].Value"
+                                icon="plus"
+                                button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="AuthorsTable"></abp-table>
+    </abp-card-body>
+</abp-card>

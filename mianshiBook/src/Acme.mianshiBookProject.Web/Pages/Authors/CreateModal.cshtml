@@ -1,0 +1,25 @@
+﻿@page
+@using Acme.mianshiBookProject.Localization
+@using Acme.mianshiBookProject.Web.Pages.Authors
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using Volo.Abp.AspNetCore.Mvc.UI.Packages.SignalR
+@model CreateModalModel
+@inject IStringLocalizer<mianshiBookProjectResource> L
+@{
+    Layout = null;
+}
+@section scripts {
+    <abp-script type="typeof(SignalRBrowserScriptContributor)" />
+}
+<form asp-page="/Authors/CreateModal">      
+    <abp-modal>
+        <abp-modal-header title="@L["NewAuthor"].Value"></abp-modal-header>
+        <abp-modal-body>
+            <abp-input asp-for="Author.Name" />
+            <abp-input asp-for="Author.BirthDate" />
+            <abp-input asp-for="Author.ShortBio" />
+        </abp-modal-body>
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</form>
